@@ -14,7 +14,11 @@
                         <h5 class="h3 fw-bold">{{ $course->title }}</h5>
                         <p class="text-success mt-4" style="font-size: 20px;">₹ {{ $course->discount_price }} /- month</p>
                         <p>{{ $course->description }}</p>
-                        <button class="btn btn-theme-info">Enroll Now!</button>
+                        <form action="{{ route('enroll') }}" method="post">
+                            @csrf
+                            <input type="text" hidden value="{{ $course->id }}" name="course_id">
+                            <button class="btn btn-theme-info">Enroll Now!</button>
+                        </form>
                     </div>
                 </div>
             </div>

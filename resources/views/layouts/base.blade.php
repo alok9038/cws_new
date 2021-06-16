@@ -82,6 +82,7 @@
     }
 </style>
 <body style="background-color: white;">
+    @include('include.messages')
     <!-- Sidebar  -->
     <nav id="sidebar">
         @auth

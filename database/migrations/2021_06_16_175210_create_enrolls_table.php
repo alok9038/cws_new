@@ -15,6 +15,10 @@ class CreateEnrollsTable extends Migration
     {
         Schema::create('enrolls', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('course_id')->constrained('courses');
+            $table->boolean('status')->nullable()->default(false);
+            $table->enum('payment', ['installment', 'full'])->nullable();
             $table->timestamps();
         });
     }

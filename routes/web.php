@@ -2,20 +2,36 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CourseController;
+use App\Http\Controllers\EnrollController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PaytmController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/',[HomeController::class,"home"])->name('homepage');
 
 Route::get('/course/{slug}/{id}',[HomeController::class,"viewCourse"])->name('home.course.view');
 
+Route::middleware('auth')->group(function () {
+
+    // Route::get('/payment',[CartController::class,"payment"])->name('payment.view');
+    // Route::post('/payment',[CartController::class,"payment"])->name('payment');
+
+    Route::post('/enroll-course',[EnrollController::class,'add'])->name('enroll');
+
+    Route::get('/enroll-course',[EnrollController::class,"viewEnroll"])->name('get.enroll');
+
+    Route::post('/checkout',[EnrollController::class,'checkout'])->name('checkout');
+
+});
+
+Route::get('payment/{id}',[PaytmController::class,'pay'])->name('paytm.payment');
+Route::post('paytm-callback',[PaytmController::class,'paytmcallback'])->name('paytm.callback');
+Route::get('payment',[PaytmController::class,'paytmPurchase'])->name('paytm.purchase');
+
+
 Route::prefix('user')->middleware('auth')->group(function () {
     Route::get('/course', function () {
         return view('home.user.myCourse');
-    });
-
-    Route::get('/enroll', function () {
-        return view('home.enroll');
     });
 
     Route::get('/', function () {
