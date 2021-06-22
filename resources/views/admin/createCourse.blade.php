@@ -31,12 +31,21 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="image">Cover Image</label>
-                        <input type="file" name="image"  class="form-control shadow-none">
-                        @error('image')
-                            <p class="small text-danger">{{ $message }}</p>
-                        @enderror
+                    <div class="row">
+                        <div class="mb-3 col">
+                            <label for="image">Cover Image</label>
+                            <input type="file" name="image"  class="form-control shadow-none">
+                            @error('image')
+                                <p class="small text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="mb-3 col-4">
+                            <label for="image">Duration</label>
+                            <input type="number" name="duration"  class="form-control shadow-none">
+                            @error('duration')
+                                <p class="small text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
                     </div>
                     <div class="form-check mb-3">
                         <input class="form-check-input" name="featured" type="checkbox" value="1" id="flexCheckDefault">

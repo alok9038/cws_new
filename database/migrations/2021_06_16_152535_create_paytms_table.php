@@ -20,8 +20,9 @@ class CreatePaytmsTable extends Migration
             $table->string('email');
             $table->tinyInteger('status')->default(0);
             $table->integer('fee');
-            $table->foreignId('course_id')->constrained('courses')->nullable();
-            $table->foreignId('user_id')->constrained('user')->nullable();
+            $table->string('order_id')->unique();
+            $table->foreignId('user_id')->constrained('users')->nullable();
+            $table->foreignId('enroll_id')->constrained('enrolls')->nullable();
             $table->string('transaction_id')->default(0);
             $table->timestamps();
         });

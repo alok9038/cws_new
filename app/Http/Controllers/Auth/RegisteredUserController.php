@@ -42,9 +42,13 @@ class RegisteredUserController extends Controller
             'dob'=>'required',
             'address'=>'required',
             'contact' => 'required|size:10',
+            'image' => 'required',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+
+        $image = time() . "." . $request->image->extension();
+        $request->image->move(public_path("assets/images/students"),$image);
 
         $user = User::create([
             'name' => $request->name,
@@ -56,6 +60,7 @@ class RegisteredUserController extends Controller
             'address' => $request->address,
             'contact' => $request->contact,
             'email' => $request->email,
+            'image' => $image,
             'password' => Hash::make($request->password),
         ]);
 

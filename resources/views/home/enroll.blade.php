@@ -2,6 +2,7 @@
 @section('page_title','Enroll Course | CodeWithSadiQ')
 @section('content')
     <div class="container py-5">
+        @if (count($enrolls) !== 0)
         <div class="row">
             <div class="col-lg-8 mb-4">
                 <div class="card border-0 cws-shadow rounded-10">
@@ -15,7 +16,15 @@
                                 <p class="h5 mt-3">{{ $enroll->course->title }}</p>
                                 <p>₹ {{ $enroll->course->discount_price }} <span class="ms-3 small"><del> ₹ {{ $enroll->course->price }}</del></span></p>
                             </div>
-                            <div class="col-2"><p class="h5 mt-3"><a href="" class="fa fa-trash text-danger"></a> </p></div>
+                            <div class="col-2">
+                                <form action="{{ route('drop.enroll') }}" method="post">
+                                    @csrf
+                                    <input type="text" name="enroll_id" value="{{ $enroll->id }}" hidden>
+                                    <p class="h5 mt-3">
+                                        <button href="" class="fa fa-trash border-0 bg-transparent text-danger"></button>
+                                    </p>
+                                </form>
+                            </div>
                         </div>
                         @endforeach
                     </div>
@@ -77,6 +86,9 @@
                 </div>
             </div>
         </div>
+        @else
+            <h4>Nothing to show</h4>
+        @endif
     </div>
     <script type="text/javascript">
 

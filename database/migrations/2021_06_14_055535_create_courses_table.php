@@ -20,6 +20,7 @@ class CreateCoursesTable extends Migration
             $table->string('price')->nullable();
             $table->string('discount_price');
             $table->string('image');
+            $table->string('duration')->nullable();
             $table->longText('description');
             $table->enum('featured', ['yes', 'no'])->nullable()->default('no');
             $table->timestamps();

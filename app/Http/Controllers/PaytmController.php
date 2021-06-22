@@ -31,7 +31,23 @@ class PaytmController extends Controller
             Paytm::where([['order_id', $order_id],['user_id',$user_id]])->update(['status' => 1, 'transaction_id' => $transaction->getTransactionId()]);
             $payment = Paytm::where('order_id',$order_id)->first();
 
-            Enroll::where([['id',$payment->enroll_id],['user_id',$user_id]])->update(['status'=>true]);
+            $enroll = Enroll::where([['user_id',Auth::id()],['id',$payment->enroll_id]])->first();
+            $course_price = $enroll->course->discount_price;
+
+            $pay_check = paid_amount($enroll->id);
+            $total_pay = 0;
+
+            foreach($pay_check as $pc){
+                $total_pay += $pc->fee;
+            }
+            $total_pay;
+
+            if($total_pay == $course_price){
+                Enroll::where([['id',$enroll->id],['user_id',$user_id]])->update(['payment'=>'full','status'=>true]);
+            }
+            else{
+                Enroll::where([['id',$payment->enroll_id],['user_id',$user_id]])->update(['status'=>true]);
+            }
 
             return redirect()->route('homepage')->with('success_msg','Payment of '."$payment->fee".' is successfully done!');
 

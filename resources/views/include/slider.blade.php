@@ -55,8 +55,11 @@
                             $featured_courses = featured_course();
                         @endphp
                         @foreach ($featured_courses as $course)
+                        @php
+                            $course_id = \Crypt::encrypt($course->id)
+                        @endphp
                             <div class="single-testimonial-item card rounded-15 my-3 border-0 cws-shadow">
-                                <a href="{{ route('home.course.view',['slug'=>$course->slug, 'id'=>$course->id]) }}" class="text-decoration-none" title="{{ $course->title }}">
+                                <a href="{{ route('home.course.view',['slug'=>$course->slug, 'id'=>$course_id]) }}" class="text-decoration-none" title="{{ $course->title }}">
                                     <div class="card-img-top rounded-15">
                                         <img src="{{ asset('assets/images/course/'.$course->image) }}" class="img-fluid rounded-15" style="height: 233px;  object-fit:cover;" alt="">
                                     </div>

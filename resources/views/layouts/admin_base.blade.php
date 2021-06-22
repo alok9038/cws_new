@@ -35,11 +35,8 @@
                 <li class="@yield('dashboard_select')">
                     <a href="{{ route('admin.dashboard') }}"><img src="{{ asset('assets/images/icons/dashboard.svg') }}" style="height: 18px;" class="img-fluid me-3">Dashboard</a>
                 </li>
-                <li class="@yield('category_select')">
+                {{-- <li class="@yield('category_select')">
                     <a href="#"><img src="{{ asset('assets/images/icons/list.svg') }}" style="height: 18px;" class="img-fluid me-3">Category</a>
-                </li>
-                {{-- <li class="@yield('sub_category_select')">
-                    <a href="#"><img src="{{ asset('assets/images/icons/list-text.svg') }}" style="height: 18px;" class="img-fluid me-3">Sub Category</a>
                 </li> --}}
                 <li class="@yield('course_select')">
                     <a href="{{ route('view.courses') }}"><img src="{{ asset('assets/images/icons/book.svg') }}" style="height: 18px;" class="img-fluid me-3">Course</a>
@@ -47,18 +44,19 @@
                 <li class="@yield('create_course_select')">
                     <a href="{{ route('add.course.view') }}"><img src="{{ asset('assets/images/icons/add.svg') }}" style="height: 18px;" class="img-fluid me-3">Create Course</a>
                 </li>
-                {{-- <li class="@yield('create_course_content_select')">
-                    <a href="#"><img src="{{ asset('assets/images/icons/button.svg') }}" style="height: 18px;" class="img-fluid me-3">Add Course Content</a>
-                </li> --}}
-                <li class="@yield('notification_select')">
-                    <a href="#"><img src="{{ asset('assets/images/icons/notification.svg') }}" style="height: 18px;" class="img-fluid me-3">Notifications</a>
+                <li class="@yield('user_select')">
+                    <a href="{{ route('admin.students') }}"><img src="{{ asset('assets/images/icons/users.svg') }}" style="height: 18px;" class="img-fluid me-3">Student</a>
                 </li>
+                {{-- <li class="@yield('notification_select')">
+                    <a href="#"><img src="{{ asset('assets/images/icons/notification.svg') }}" style="height: 18px;" class="img-fluid me-3">Notifications</a>
+                </li> --}}
                 <li class="@yield('analytics_select')">
                     <a href="#"><img src="{{ asset('assets/images/icons/analytics.svg') }}" style="height: 18px;" class="img-fluid me-3">Analytics</a>
                 </li>
                 <li class="@yield('earning_select')">
-                    <a href="#"><img src="{{ asset('assets/images/icons/dollar.svg') }}" style="height: 18px;" class="img-fluid me-3">Earning</a>
+                    <a href="{{ route('admin.earning') }}"><img src="{{ asset('assets/images/icons/dollar.svg') }}" style="height: 18px;" class="img-fluid me-3">Earning</a>
                 </li>
+                <hr>
                 {{-- <li>
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
@@ -76,6 +74,12 @@
                 <li>
                     <a href="#"><img src="{{ asset('assets/images/icons/settings.svg') }}" style="height: 18px;" class="img-fluid me-3">Setting</a>
                 </li>
+                <form action="{{ route('logout') }}" id="logout_form" method="POST">
+                    @csrf
+                </form>
+                <li class="@yield('logout_select')">
+                    <a href="#" onclick="document.getElementById('logout_form').submit();"><i class="fa fa-power-off me-3"></i>Logout</a>
+                </li>
             </ul>
         </nav>
 
@@ -86,15 +90,21 @@
                     <button type="button" id="sidebarCollapse" class="btn bg-transparent shadow-none">
                         <i class="fas fa-align-left"></i>
                     </button>
-                    <ul class="navbar-nav">
-                        <li class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"><img src="{{ asset('assets/images/icons/programmer.svg') }}" style="height: 30px; object-position:center;" alt="" class="img-fluid rounded-circle cws-shadow"></a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
-                        </li>
+                    <ul class="navbar-nav navbar-links">
+                        <li class="navbar-dropdown dropleft me-lg-5">
+                            <a href="#" class="">
+                                <img src="{{ asset('assets/images/students/'.Auth()->user()->image) }}" style="height: 30px;width:30px; object-position:center;" alt="" class="img-fluid rounded-circle cws-shadow">
+                            </a>
+                            <div class="dropdown  rounded-15" style="left: -180px;">
+                              <h6 class="h6 ms-3 text-capitalize">{{ Auth()->user()->name }}</h6>
+                              <a href="#">My Profile</a>
+                              <a href="#">Settings</a>
+                              <a href="#" onclick="document.getElementById('form').submit();">Logout</a>
+                                <form action="{{ route('logout') }}" id="form" method="POST">
+                                    @csrf
+                                </form>
+                            </div>
+                          </li>
                     </ul>
                 </div>
             </nav>

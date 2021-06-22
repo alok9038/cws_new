@@ -55,11 +55,14 @@
                             $courses = courses();
                         @endphp
                         @foreach ($courses as $course)
+                        @php
+                           $course_id = \Crypt::encrypt($course->id)
+                        @endphp
                         <div class="col mb-4">
-                            <a href="{{ route('home.course.view',['slug'=>$course->slug, 'id'=>$course->id]) }}" class="" title="{{ $course->title }}">
+                            <a href="{{ route('home.course.view',['slug'=>$course->slug, 'id'=>$course_id]) }}" class="" title="{{ $course->title }}">
                                 <div class="card border-0 rounded-15 cws-shadow-md">
                                     <div class="card-img-top rounded-15">
-                                        <img src="{{ asset('assets/images/course/'.$course->image) }}" class="img-fluid rounded-15" style="height: 233px;  object-fit:cover;" alt="$course->image">
+                                        <img src="{{ asset('assets/images/course/'.$course->image) }}" class="img-fluid rounded-15 w-100" style="height: 233px;  object-fit:cover;" alt="$course->image">
                                     </div>
                                     <div class="card-body">
                                         <p class="h5 text-truncate">{{ $course->title }}</p>

@@ -15,6 +15,7 @@
     <!-- Our Custom CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/adminSidebar.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 
@@ -29,27 +30,24 @@
         <!-- Sidebar  -->
         <nav id="sidebar">
             <ul class="list-unstyled components">
-                <p class="text-center text-dark">CodeWithSadiQ</p>
+                <p class="text-center text-dark"><a href="{{ route('homepage') }}" class="text-decoration-none">CodeWithSadiQ</a></p>
                 <li class="@yield('dashboard_select')">
-                    <a href="#"><img src="{{ asset('assets/images/icons/dashboard.svg') }}" style="height: 18px;" class="img-fluid me-3">My Dashboard</a>
+                    <a href="{{ route('user.dashboard') }}"><img src="{{ asset('assets/images/icons/dashboard.svg') }}" style="height: 18px;" class="img-fluid me-3">My Dashboard</a>
                 </li>
                 <li class="@yield('course_select')">
-                    <a href="#"><img src="{{ asset('assets/images/icons/book.svg') }}" style="height: 18px;" class="img-fluid me-3">My Courses</a>
+                    <a href="{{ route('user.course') }}"><img src="{{ asset('assets/images/icons/book.svg') }}" style="height: 18px;" class="img-fluid me-3">My Courses</a>
                 </li>
                 <li class="@yield('payment_select')">
-                    <a href="#"><img src="{{ asset('assets/images/icons/dollar.svg') }}" style="height: 18px;" class="img-fluid me-3">Payments</a>
+                    <a href="{{ route('user.payments') }}"><img src="{{ asset('assets/images/icons/dollar.svg') }}" style="height: 18px;" class="img-fluid me-3">Payments</a>
                 </li>
-                <li class="@yield('group_select')">
-                    <a href="#"><img src="{{ asset('assets/images/icons/notification.svg') }}" style="height: 18px;" class="img-fluid me-3">Group</a>
+                <li class="@yield('setting_select')">
+                    <a  href="{{ route('user.setting') }}"><img src="{{ asset('assets/images/icons/settings.svg') }}" style="height: 18px;" class="img-fluid me-3">Setting</a>
                 </li>
-                <li class="@yield('notification_select')">
-                    <a href="#"><img src="{{ asset('assets/images/icons/notification.svg') }}" style="height: 18px;" class="img-fluid me-3">Notifications</a>
-                </li>
-                <li>
-                    <a href="#"><img src="{{ asset('assets/images/icons/settings.svg') }}" style="height: 18px;" class="img-fluid me-3">Setting</a>
-                </li>
-                <li class="@yield('earning_select')">
-                    <a href="#"><img src="{{ asset('assets/images/icons/dollar.svg') }}" style="height: 18px;" class="img-fluid me-3">Logout</a>
+                <form action="{{ route('logout') }}" id="logout_form" method="POST">
+                    @csrf
+                </form>
+                <li class="@yield('logout_select')">
+                    <a href="#" onclick="document.getElementById('logout_form').submit();"><i class="fa fa-power-off me-3"></i>Logout</a>
                 </li>
                 {{-- <li>
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
@@ -76,25 +74,31 @@
                     <button type="button" id="sidebarCollapse" class="btn bg-transparent shadow-none">
                         <i class="fas fa-align-left"></i>
                     </button>
-                    <ul class="navbar-nav">
-                        <li class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"><img src="{{ asset('assets/images/icons/programmer.svg') }}" style="height: 30px; object-position:center;" alt="" class="img-fluid rounded-circle cws-shadow"></a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
-                        </li>
+                    <ul class="navbar-nav navbar-links">
+                        <li class="navbar-dropdown dropleft me-lg-5">
+                            <a href="#" class="">
+                                <img src="{{ asset('assets/images/students/'.Auth()->user()->image) }}" style="height: 30px;width:30px; object-position:center;" alt="" class="img-fluid rounded-circle cws-shadow">
+                            </a>
+                            <div class="dropdown  rounded-15" style="left: -180px;">
+                              <h6 class="h6 ms-3 text-capitalize">{{ Auth::user()->name }}</h6>
+                              <a href="#">My Profile</a>
+                              <a href="#">Settings</a>
+                              <a href="#" onclick="document.getElementById('form').submit();">Logout</a>
+                                <form action="{{ route('logout') }}" id="form" method="POST">
+                                    @csrf
+                                </form>
+                            </div>
+                          </li>
                     </ul>
                 </div>
             </nav>
 
             @yield('content')
-
+            @include('include.messages')
         </div>
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> --}}
     <!-- Popper.JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <!-- Bootstrap JS -->

@@ -35,6 +35,7 @@ class CourseController extends Controller
             'discount_price' => 'required',
             'image' => 'required',
             'description' => 'required',
+            'duration' => 'required',
         ]);
         $slug = Str::slug($request->title,'-');
 
@@ -47,6 +48,7 @@ class CourseController extends Controller
         $course->discount_price = $request->discount_price;
         $course->image = $image;
         $course->description = $request->description;
+        $course->duration = $request->duration;
         $course->featured = $request->featured;
         $course->slug = $slug;
         $course->save();

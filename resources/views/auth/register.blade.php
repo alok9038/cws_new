@@ -8,7 +8,7 @@
             <div class="card border-0 py-2 pt-3 rounded-15 cws-shadow">
                 <div class="card-body">
                     <h5 class="text-center">Join Now!</h5>
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
                             <label for="name">Name</label>
@@ -65,6 +65,11 @@
                             <label for="address">Address</label>
                             <textarea rows="5" name="address" class="form-control shadow-none @error('address') is-invalid @enderror">{{ old('address') }}</textarea>
                             @error('address') <p class="text-danger small">{{ $message }}</p> @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="">Image</label>
+                            <input type="file" name="image" class="form-control shadow-none">
+                            @error('image') <p class="text-danger small">{{ $message }}</p> @enderror
                         </div>
                         <div class="row">
                             <div class="mb-3 col">

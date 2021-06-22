@@ -89,6 +89,7 @@
             <div class="sidebar-header p-3">
                 <div class="d-flex">
                     <div class="img-card rounded-circle bg-danger">
+                        <img src="{{ asset('assets/images/students/'.Auth()->user()->image) }}" class="img-fluid" alt="">
                     </div>
                     <span class="d-flex ms-2 align-items-center">
                         Hi, {{ Auth::user()->name }}
@@ -97,9 +98,9 @@
             </div>
         @endauth
         <ul class="list-unstyled components p m-0 border-0">
-            <h5 class="h6 ps-2 heading">Learn</h5>
-            <li class="">
-                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">My learning</a>
+            {{-- <h5 class="h6 ps-2 heading">Learn</h5> --}}
+            {{-- <li class="">
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">My Course</a>
                 <ul class="collapse list-unstyled" id="homeSubmenu">
                     <li >
                         <a href="#">Home 1</a>
@@ -111,30 +112,27 @@
                         <a href="#">Home 3</a>
                     </li>
                 </ul>
-            </li>
-        <hr>
+            </li> --}}
             <h5 class="h6 ps-2 heading">Popular Categories</h5>
             <li>
-                <a href="#">About</a>
-                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
-                <ul class="collapse list-unstyled" id="pageSubmenu">
-                    <li>
-                        <a href="#">Page 1</a>
-                    </li>
-                    <li>
-                        <a href="#">Page 2</a>
-                    </li>
-                    <li>
-                        <a href="#">Page 3</a>
-                    </li>
-                </ul>
+                <a href="{{ route('user.dashboard') }}"><img src="{{ asset('assets/images/icons/dashboard.svg') }}" style="height: 15px;" class="img-fluid me-3">My Dashboard</a>
+            </li>
+            {{-- <li class="@yield('category_select')">
+                <a href="#"><img src="{{ asset('assets/images/icons/list.svg') }}" style="height: 18px;" class="img-fluid me-3">Category</a>
+            </li> --}}
+            <li>
+                <a href="{{ route('view.courses') }}"><img src="{{ asset('assets/images/icons/book.svg') }}" style="height: 15px;" class="img-fluid me-3">My Course</a>
+            </li>
+            <li >
+                <a href="{{ route('add.course.view') }}"><img src="{{ asset('assets/images/icons/dollar.svg') }}" style="height: 15px;" class="img-fluid me-3">Payments</a>
             </li>
             <li>
-                <a href="#">Portfolio</a>
+                <a href="{{ route('user.setting') }}"><i class="fa fa-cogs me-3"></i>Setting</a>
             </li>
             <li>
-                <a href="#">Contact</a>
+                <a href="#"><i class="fa fa-power-off me-3"></i>Logout</a>
             </li>
+
         </ul>
     </nav>
     <div class="@if ($url == "") wave @endif ">
@@ -155,10 +153,9 @@
                     <li class="nav-item"><a href="#" class="nav-link">Home</a></li>
                     @auth
                     <li class="navbar-dropdown">
-                        <a href="#" class="">
-                            {{-- <img src="{{ asset("assets/images/icons/notification.svg") }}" style="height: 20px;" alt="" class="img-fluid"> --}}
+                        {{-- <a href="#" class="">
                             <i class="far fa-bell" style="font-size: 20px;"></i>
-                        </a>
+                        </a> --}}
                         <div class="dropdown  rounded-15" style="left: -100px!important;">
                           <h6 class="h6 ms-3">Notifications</h6>
                           <a href="#">lorem ipsum emmet </a>
@@ -172,10 +169,13 @@
                     <li class="nav-item"><a href="#search" class="nav-link"><i class="fa fa-search px-3"></i></a></li>
 
                     <li class="nav-item navbar-dropdown" >
-                        <a href="#" class="nav-link ms-2 btn btn-outline-dark px-auto py-2 rounded-circle" style="width: 40px; height:40px;"></a>
+                        <a href="#" class="nav-link ms-2 border rounded-circle p-0" style="width: 40px; height:40px;">
+                            <img src="{{ asset('assets/images/students/'.Auth::user()->image) }}" class="img-fluid rounded-circle" style="width: 40px; height:40px;" alt="{{ Auth::user()->image }}">
+                        </a>
                         <div class="dropdown rounded-15" style="left: -150px!important;">
                             <div class="d-flex">
                                 <div class="ms-3 rounded-circle bg-danger" style="width: 40px; height:40px;">
+                                    <img src="{{ asset('assets/images/students/'.Auth::user()->image) }}" class="img-fluid rounded-circle" style="width: 40px; height:40px;" alt="{{ Auth::user()->image }}">
                                 </div>
                                 <span class="d-flex ms-2 align-items-center">
                                     Hi, {{ Auth::user()->name }}
@@ -187,8 +187,9 @@
                           @else
                             <a href="{{ route('user.dashboard') }}">My Dashboard</a>
                           @endif
-                          <a href="#">My Course</a>
-                          <a href="#">Messages</a>
+                          <a href="{{ route('get.enroll') }}">My Cart</a>
+                          <a href="{{ route('user.course') }}">My Course</a>
+                          {{-- <a href="#">Messages</a> --}}
                           <a href="#" onclick="document.getElementById('form').submit();">Logout</a>
                             <form action="{{ route('logout') }}" id="form" method="POST">
                                 @csrf
@@ -206,9 +207,9 @@
                     <a href="#search" class="p-3 d-lg-none d-flex shadow-none">
                         <i class="fa fa-search"></i>
                     </a>
-                    <a type="button" class="p-3 pe-0 d-lg-none ms-auto d-flex shadow-none">
+                    {{-- <a type="button" class="p-3 pe-0 d-lg-none ms-auto d-flex shadow-none">
                         <i class="fas fa-shopping-cart"></i>
-                    </a>
+                    </a> --}}
                 </div>
             </div>
         </nav>
@@ -253,7 +254,11 @@
                     </div>
                     <div class="col d-lg-flex justify-content-center">
                         <div>
-                            <h5 class="h4">Explore</h5>
+                            <h5 class="h5">Explore</h5>
+                            <div class="section-borders" style="margin-top:-10px;">
+                                <span class="bg-success" style="width:90px;"></span>
+                            </div>
+                            <span style="background-color: gray; width:40px; height:5px;"></span>
                             <ul class="footer-ul">
                                 <li class="footer-li"><a href="" class="text-decoration-none footer-a">Start here</a></li>
                                 <li class="footer-li"><a href="" class="text-decoration-none footer-a">About us</a></li>
@@ -264,7 +269,10 @@
                     </div>
                     <div class="col d-lg-flex justify-content-center">
                         <div>
-                            <h5 class="h4">Connect With Us</h5>
+                            <h5 class="h5">Connect With Us</h5>
+                            <div class="section-borders" style="margin-top:-10px;">
+                                <span class="bg-success" style="width:90px;"></span>
+                            </div>
                             <ul class="footer-ul">
                                 <li class="footer-li"><a href="" class="text-decoration-none facebook"><i class="fa fa-facebook-square fa-2x me-2"></i> Facebook</a></li>
                                 <li class="footer-li"><a href="" class="text-decoration-none linkedin"><i class="fa fa-linkedin-square fa-2x me-2"></i>Linkedin</a></li>
@@ -275,7 +283,10 @@
                     </div>
                     <div class="col d-lg-flex justify-content-center">
                         <div>
-                            <h5 class="h4">Featured Course</h5>
+                            <h5 class="h5">Featured Course</h5>
+                            <div class="section-borders" style="margin-top:-10px;">
+                                <span class="bg-success" style="width:90px;"></span>
+                            </div>
                             <ul class="footer-ul">
                                 @php
                                     $featured_courses = footer_featured_course();
