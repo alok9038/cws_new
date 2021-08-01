@@ -17,8 +17,9 @@ class CreateEnrollsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('course_id')->constrained('courses');
+            $table->foreignId('order_id')->constrained('orders');
             $table->boolean('status')->nullable()->default(false);
-            $table->enum('payment', ['installment', 'full'])->nullable();
+            $table->enum('payment', ['installment', 'full','monthly'])->nullable();
             $table->timestamps();
         });
     }

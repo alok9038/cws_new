@@ -1,6 +1,6 @@
-@extends('layouts.admin_base')
+@extends('layouts.newBase')
 @section('page_title','Create Course | Admin')
-@section('create_course_select','active')
+@section('create_course_select','mm-active')
 @section('content')
     <div class="container mt-4 px-4">
         <h4>Create New Course</h4>
@@ -9,7 +9,7 @@
                 <form action="{{ route('add.course') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
-                        <label for="title">Title</label>
+                        <label for="title" class="fw-bold">Title</label>
                         <input type="text" value="{{ old('title') }}" name="title" class="form-control shadow-none">
                         @error('title')
                             <p class="small text-danger">{{ $message }}</p>
@@ -17,30 +17,41 @@
                     </div>
                     <div class="row">
                         <div class="mb-3 col">
-                            <label for="price">Price</label>
+                            <label for="price" class="fw-bold">Price</label>
                             <input type="number" name="price" value="{{ old('price') }}" class="form-control shadow-none">
                             @error('price')
                                 <p class="small text-danger">{{ $message }}</p>
                             @enderror
                         </div>
                         <div class="mb-3 col">
-                            <label for="discount_price">Discount Price</label>
+                            <label for="discount_price" class="fw-bold">Discount Price</label>
                             <input type="number" name="discount_price" value="{{ old('discount_price') }}" class="form-control shadow-none">
                             @error('discount_price')
+                                <p class="small text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="mb-3 col">
+                            <label for="course_type" class="fw-bold">Course Type</label>
+                            <select name="course_type" id="course_type" class="form-control">
+                                <option value="" selected hidden disabled>select</option>
+                                <option value="0">Programming</option>
+                                <option value="1">Theory</option>
+                            </select>
+                            @error('course_type')
                                 <p class="small text-danger">{{ $message }}</p>
                             @enderror
                         </div>
                     </div>
                     <div class="row">
                         <div class="mb-3 col">
-                            <label for="image">Cover Image</label>
+                            <label for="image" class="fw-bold">Cover Image</label>
                             <input type="file" name="image"  class="form-control shadow-none">
                             @error('image')
                                 <p class="small text-danger">{{ $message }}</p>
                             @enderror
                         </div>
                         <div class="mb-3 col-4">
-                            <label for="image">Duration</label>
+                            <label for="image" class="fw-bold">Duration</label>
                             <input type="number" name="duration"  class="form-control shadow-none">
                             @error('duration')
                                 <p class="small text-danger">{{ $message }}</p>
@@ -49,12 +60,12 @@
                     </div>
                     <div class="form-check mb-3">
                         <input class="form-check-input" name="featured" type="checkbox" value="1" id="flexCheckDefault">
-                        <label class="form-check-label h6" for="flexCheckDefault">
+                        <label class="form-check-label h6" for="flexCheckDefault" class="fw-bold">
                           Featured Course
                         </label>
                       </div>
                     <div class="mb-3">
-                        <label for="description">Description</label>
+                        <label for="description" class="fw-bold">Description</label>
                         <textarea name="description" id="description" class="form-control shadow-none" cols="30" rows="5">{{ old('description') }}</textarea>
                     </div>
                     <div class="mb-3">

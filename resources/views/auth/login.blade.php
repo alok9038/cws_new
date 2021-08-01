@@ -1,6 +1,5 @@
 @extends('layouts.base')
 @section('page_title','Login | CodeWithSadiQ ')
-
 @section('content')
 <div class="container-fluid bg-light" style="margin-top: -20px;">
     <div class="container d-flex align-items-center justify-content-center" style="height: 70vh">

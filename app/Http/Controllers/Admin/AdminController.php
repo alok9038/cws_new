@@ -5,11 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Enroll;
+use App\Models\Order;
 use App\Models\Paytm;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Jackiedo\DotenvEditor\Facades\DotenvEditor;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminController extends Controller
 {
@@ -27,15 +30,7 @@ class AdminController extends Controller
     }
 
     public function students(Request $request){
-        if($request->gender !== null && $request->gender == 'all'){
-            $data['users'] = User::where('user_type','!=','admin')->paginate(10);
-        }
-        elseif($request->gender !== null ){
-            $data['users'] = User::where([['gender',$request->gender],['user_type','student']])->paginate(10);
-        }
-        else{
-            $data['users'] = User::where('user_type','student')->paginate(10);
-        }
+        $data['users'] = User::where('user_type','student')->get();
 
         return view('admin.users',$data);
     }
@@ -48,5 +43,25 @@ class AdminController extends Controller
     public function duePayments(){
         $data['enrolls'] = Enroll::where([['status',true],['payment','installment']])->get();
         return view('admin.due_payments',$data);
+    }
+
+    public function paymentSetting(){
+        return view('admin.payment_setting');
+    }
+
+    public function paymentSettingStore(Request $request)
+    {
+        $input = $request->all();
+
+        $env_keys_save = DotenvEditor::setKeys([
+            'PAYTM_ENVIRONMENT' => $input['PAYTM_ENVIRONMENT'],
+            'PAYTM_MERCHANT_ID' => $input['PAYTM_MERCHANT_ID'],
+            'PAYTM_MERCHANT_KEY' => $input['PAYTM_MERCHANT_KEY'],
+        ]);
+
+        $env_keys_save->save();
+
+        Alert::toast('Paytm settings has been updated !','success');
+        return redirect()->back();
     }
 }

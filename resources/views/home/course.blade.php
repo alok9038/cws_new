@@ -14,11 +14,16 @@
                         <h5 class="h3 fw-bold">{{ $course->title }}</h5>
                         <p class="text-success mt-4" style="font-size: 20px;">₹ {{ $course->discount_price }} /- month</p>
                         <p>{{ $course->description }}</p>
+
+                        @if (check_enroll($course->id)->count() != 1)
                         <form action="{{ route('enroll') }}" method="post">
                             @csrf
                             <input type="text" hidden value="{{ $course->id }}" name="course_id">
                             <button class="btn btn-theme-info">Enroll Now!</button>
                         </form>
+                        @else
+                            <alert class="alert-info alert p-2 border-0 text-success">Course already enrolled!</alert>
+                        @endif
                     </div>
                 </div>
             </div>

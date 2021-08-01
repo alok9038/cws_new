@@ -1,6 +1,6 @@
-@extends('layouts.admin_base')
+@extends('layouts.newBase')
 @section('page_title','Admin | CodeWithSadiQ')
-@section('earning_select','active')
+@section('earning_select','mm-active')
 @section('content')
     <div class="container px-4">
         <span class="d-flex my-3"><h4>Earnings</h4> <a href="{{ route('add.course.view') }}" class="btn btn-info ms-auto"> Dues Payments</i></a></span>

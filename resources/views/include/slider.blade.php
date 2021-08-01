@@ -10,7 +10,7 @@
 </style>
 <script>
     $(document).ready(function(){
-  $(".owl-carousel").owlCarousel({
+  $(".featured-slider").owlCarousel({
     items:4,
     autoplay:true,
     margin:20,
@@ -50,7 +50,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="owl-carousel client-testimonial-carousel py-4">
+                    <div class="owl-carousel featured-slider client-testimonial-carousel py-4">
                         @php
                             $featured_courses = featured_course();
                         @endphp

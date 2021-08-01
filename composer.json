@@ -10,8 +10,10 @@
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "jackiedo/dotenv-editor": "^1.2",
         "laravel/framework": "^8.40",
-        "laravel/tinker": "^2.5"
+        "laravel/tinker": "^2.5",
+        "realrashid/sweet-alert": "^4.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

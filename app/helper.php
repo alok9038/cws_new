@@ -2,7 +2,9 @@
 
 use App\Models\Course;
 use App\Models\Enroll;
+use App\Models\Order;
 use App\Models\Paytm;
+use App\Models\SiteSetting;
 use Illuminate\Support\Facades\Auth;
 
 if(!function_exists('featured_course')){
@@ -40,13 +42,43 @@ if(!function_exists('paid_amount')){
 }
 if(!function_exists('payments')){
     function payments(){
-        $payment = Paytm::where('user_id',Auth::id())->orderBy('id','desc')->get();
+        $payment = Paytm::where([['user_id',Auth::id()],['status',1]])->orderBy('id','desc')->get();
         return $payment;
     }
 }
 if(!function_exists('enrolled_course')){
     function enrolled_course($id){
         $enroll = Enroll::where([['user_id',Auth::id()],['id',$id]])->get();
+        return $enroll;
+    }
+}
+
+if(!function_exists('site')){
+    function site(){
+        $site = SiteSetting::first();
+        return $site;
+    }
+}
+
+if(!function_exists('check_enroll')){
+    function check_enroll($course_id){
+        $check_enroll = Enroll::where([['course_id',$course_id],['user_id',Auth::id()]])->get();
+        return $check_enroll;
+    }
+}
+
+if(!function_exists('course_amount')){
+    function course_amount($user_id){
+        $enroll = Enroll::where([['user_id',$user_id],['status',1]])->get();
+        return $enroll;
+    }
+}
+
+
+if(!function_exists('dues_amount')){
+    function dues_amount($id){
+        $enroll =  Order::where([['user_id',$id],['ordered',true]])->get();
+
         return $enroll;
     }
 }

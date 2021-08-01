@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Anand\LaravelPaytmWallet\Facades\PaytmWallet;
 use App\Models\Enroll;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Models\Paytm;
 use Illuminate\Support\Facades\Auth;
-use PaytmWallet;
+// use PaytmWallet;
 use Illuminate\Support\Facades\Crypt;
 
 
@@ -31,28 +33,17 @@ class PaytmController extends Controller
             Paytm::where([['order_id', $order_id],['user_id',$user_id]])->update(['status' => 1, 'transaction_id' => $transaction->getTransactionId()]);
             $payment = Paytm::where('order_id',$order_id)->first();
 
-            $enroll = Enroll::where([['user_id',Auth::id()],['id',$payment->enroll_id]])->first();
-            $course_price = $enroll->course->discount_price;
+            Enroll::where([['order_id',$payment->enroll_id],['user_id',$user_id]])->update(['status'=>true]);
+            Order::where([['id',$payment->enroll_id],['user_id',$user_id]])->update(['ordered'=>true]);
 
-            $pay_check = paid_amount($enroll->id);
-            $total_pay = 0;
-
-            foreach($pay_check as $pc){
-                $total_pay += $pc->fee;
-            }
-            $total_pay;
-
-            if($total_pay == $course_price){
-                Enroll::where([['id',$enroll->id],['user_id',$user_id]])->update(['payment'=>'full','status'=>true]);
-            }
-            else{
-                Enroll::where([['id',$payment->enroll_id],['user_id',$user_id]])->update(['status'=>true]);
-            }
-
-            return redirect()->route('homepage')->with('success_msg','Payment of '."$payment->fee".' is successfully done!');
+            toast('Payment of '."$payment->fee".' is successfully Done!','success');
+            return redirect()->route('homepage');
 
         } else if ($transaction->isFailed()) {
-            Paytm::where('order_id', $order_id)->update(['status' => 0, 'transaction_id' => $transaction->getTransactionId()]);
+            $payment = Paytm::where([['order_id', $order_id],['user_id',$user_id]])->update(['status' => 0, 'transaction_id' => $transaction->getTransactionId()]);
+            Enroll::where([['order_id',$payment->enroll_id],['user_id',$user_id]])->update(['status'=>false, 'payment'=>null]);
+            Order::where([['id',$payment->enroll_id],['user_id',$user_id]])->update(['ordered'=>false, 'payment'=>null]);
+
             return view('paytm-fail')->with('message', "Your payment is failed.");
 
         } else if ($transaction->isOpen()) {
@@ -100,9 +91,6 @@ class PaytmController extends Controller
         return $payment->receive();  // initiate a new payment
     }
 
-    public function paytmPurchase()
-    {
-        return view('paytm');
-    }
+
 }
 

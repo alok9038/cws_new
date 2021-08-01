@@ -9,84 +9,90 @@
                 Php & Mysqli
             </div> --}}
         <div class="card-body">
-            @php
-            $paid_amount = 0;
-            @endphp
-            @if (count($enrolls) > 0)
-            @foreach ($enrolls as $enroll)
-            <div class="row p-2 bg-light rounded-10">
-                <div class="col-2"><img src="{{ asset('assets/images/course/'.$enroll->course->image) }}"
-                        alt="{{ $enroll->course->image }}" style="width: 150px;" class="img-fluid rounded-10"></div>
-                <div class="mt-1 col">
-                    <h5>{{ $enroll->course->title }}</h5>
-                    @php
-                    $payment = paid_amount($enroll->id);
-                    foreach ($payment as $paid) {
-                    $paid_amount += $paid->fee;
-                    }
-                    @endphp
-                    @if ($enroll->payment == 'full')
-                        <p class="small text-success">₹ {{ $enroll->course->discount_price }}
-                        <p class="small text-success fw-bold " style="margin-top: -20px;">Fully paid <br>
-                    @else
-                    <p class="small text-success" style="font-weight: 600">₹ {{ $paid_amount }} paid <br>
-                        <span class="small text-danger" style="font-weight: 600">₹
-                            {{ $enroll->course->discount_price  - $paid_amount }} dues
-                        </span>
-                    </p>
-                    @endif
-                </div>
-                @php
-                $enroll_id = \Crypt::encrypt($enroll->id)
-                @endphp
-                <div class="col d-flex justify-content-center align-items-center">
-                    <a href="{{ route('user.payment.record',['course'=>$enroll->course->slug, 'id'=>$enroll_id]) }}"
-                        class="btn btn-info">Payments Records</a>
-                </div>
-            </div>
-            @if ($paid_amount != $enroll->course->discount_price)
-            <div class="p-2">
-                <div id="payment" class="" style="display: none">
-                    <form action="{{ route('pay.dues') }}" class="mb-3" method="post">
-                        @csrf
-                        <div class="form-check mb-2">
-                            <input class="form-check-input payment_type" type="radio" value="custom" name="payment_type"
-                                id="flexRadioDefault1">
-                            <label class="form-check-label" for="flexRadioDefault1">
-                                Custom Amount
-                            </label>
+            @foreach ($enrolls as $item)
+                            @php
+                                $paid_amount = 0;
+                            @endphp
+                            @if (count($item->InCart) > 0)
+                            @foreach ($item->InCart as $enroll)
+                            <div class="d-flex p-2 bg-light rounded-10">
+                                <span><img src="{{ asset('assets/images/course/'.$enroll->course->image) }}" alt="{{ $enroll->course->image }}" style="width: 150px;" class="img-fluid rounded-10"></span>
+                                <div>
+                                    <span class="mt-1 ms-3 h5">{{ $enroll->course->title }} <br>
+                                    </span>
+                                    <p class="small text-success fw-bold ms-3">Course Fee : ₹ {{ $enroll->course->discount_price }}
+                                    @php
+
+                                        $discount_price = 0;
+                                        $paid_amount = 0;
+
+                                    // foreach ($enrolls as $item) {
+                                        foreach($item->inCart as $enroll){
+                                            $discount_price += $enroll->course->discount_price;
+                                        }
+
+                                        foreach ($item->paytm_payments as $paid) {
+                                            $paid_amount += $paid->fee;
+                                        }
+                                        // }
+
+
+                                    @endphp
+
+                                    @if ($paid_amount == $discount_price)
+                                    <p class="small ms-3 text-success mt-n5" style="margin-top: -10px;">full paid</p]>
+                                    @endif
+                                </div>
+                                </div>
+                            @endforeach
+                            @else
+                            <div class="p-2 bg-light mb-2">
+                                <a href="{{ route('homepage') }}" class="btn btn-info btn-sm mb-2 text-dark mt-2">Explore Course!</a>
+                            </div>
+                            @endif
+
+                            {{-- pay --}}
+
+                        @if ($paid_amount != $discount_price)
+                        <h5 class="my-3">Total Dues Fee : ₹ {{ $discount_price  - $paid_amount }}</h5>
+                        <div class="card-footer">
+                                <div class="p-2">
+                                    <div id="payment" class="" style="display: none">
+                                        <form action="{{ route('pay.dues') }}" class="mb-3" method="post">
+                                            @csrf
+                                            <div class="form-check mb-2">
+                                                <input class="form-check-input payment_type" type="radio" value="custom" name="payment_type" id="flexRadioDefault1">
+                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                Custom Amount
+                                                </label>
+                                            </div>
+                                            <div class="mb-3">
+                                                <input type="text" name="enroll_id" value="{{ $item->id }}" hidden>
+                                                <input type="text" name="custom_payment" id="custom_pay" placeholder=" enter amount" class="form-control d-none rounded-0 shadow-none" style="height: 33px;">
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input payment_type" type="radio" value="full_{{ $discount_price  - $paid_amount }}" name="payment_type" id="flexRadioDefault2">
+                                                <label class="form-check-label" for="flexRadioDefault2">
+                                                Pay Rest amount ( ₹ {{ $discount_price  - $paid_amount }} )
+                                                </label>
+                                            </div>
+                                            <div class="mb-3 d-flex justify-content-center">
+                                                <input type="submit" id="submit_btn" class="btn btn-info mt-4 btn-sm " value="Pay ">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="card-footer d-flex justify-content-center border-0 bg-transparent">
+                                    <button class="btn btn-info btn-sm  mx-auto" id="pay_btn">Pay Dues</button>
+                                    <button class="btn btn-danger btn-sm float-end mx-auto d-none"  id="cancel_btn">Cancel</button>
+                                </div>
+                            </div>
+                        @else
+                        <div class="card-footer">
+                            {{-- <p class="text-white badge bg-success">Fully Paid!</p> --}}
                         </div>
-                        <div class="mb-3">
-                            <input type="text" name="enroll_id" value="{{ $enroll->id }}" hidden>
-                            <input type="text" name="custom_payment" id="custom_pay" placeholder=" enter amount"
-                                class="form-control d-none rounded-0 shadow-none" style="height: 33px;">
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input payment_type" type="radio"
-                                value="full_{{ $enroll->course->discount_price  - $paid_amount }}" name="payment_type"
-                                id="flexRadioDefault2">
-                            <label class="form-check-label" for="flexRadioDefault2">
-                                Pay Rest amount ( ₹ {{ $enroll->course->discount_price  - $paid_amount }} )
-                            </label>
-                        </div>
-                        <div class="mb-3 d-flex justify-content-center">
-                            <input type="submit" id="submit_btn" class="btn btn-info mt-4 btn-sm " value="Pay ">
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="card-footer d-flex justify-content-center border-0 bg-transparent">
-                <button class="btn btn-info btn-sm  mx-auto" id="pay_btn">Pay Dues</button>
-                <button class="btn btn-danger btn-sm float-end mx-auto d-none" id="cancel_btn">Cancel</button>
-            </div>
-            @endif
-            @endforeach
-            @else
-            <div class="p-2 bg-light mb-2">
-                <a href="{{ route('homepage') }}" class="btn btn-info btn-sm mb-2 text-dark mt-2">Explore Course!</a>
-            </div>
-            @endif
-        </div>
+                        @endif
+                        @endforeach
     </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

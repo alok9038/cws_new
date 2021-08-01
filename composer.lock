@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4bac304922f3390a51f25ab309eab855",
+    "content-hash": "5ae4acad440b9b8aa9bf1fe310c5e420",
     "packages": [
         {
             "name": "anandsiddharth/laravel-paytm-wallet",
@@ -911,6 +911,63 @@
                 "source": "https://github.com/guzzle/psr7/tree/1.8.2"
             },
             "time": "2021-04-26T09:17:50+00:00"
+        },
+        {
+            "name": "jackiedo/dotenv-editor",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/JackieDo/Laravel-Dotenv-Editor.git",
+                "reference": "f93690a80915d51552931d9406d79b312da226b9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/JackieDo/Laravel-Dotenv-Editor/zipball/f93690a80915d51552931d9406d79b312da226b9",
+                "reference": "f93690a80915d51552931d9406d79b312da226b9",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "^5.8|^6.0|^7.0|^8.0",
+                "illuminate/contracts": "^5.8|^6.0|^7.0|^8.0",
+                "illuminate/support": "^5.8|^6.0|^7.0|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Jackiedo\\DotenvEditor\\DotenvEditorServiceProvider"
+                    ],
+                    "aliases": {
+                        "DotenvEditor": "Jackiedo\\DotenvEditor\\Facades\\DotenvEditor"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Jackiedo\\DotenvEditor\\": "src/Jackiedo/DotenvEditor"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jackie Do",
+                    "email": "anhvudo@gmail.com"
+                }
+            ],
+            "description": "The .env file editor tool for Laravel 5.8+",
+            "keywords": [
+                "dotenv",
+                "dotenv-editor",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/JackieDo/Laravel-Dotenv-Editor/issues",
+                "source": "https://github.com/JackieDo/Laravel-Dotenv-Editor/tree/1.2.0"
+            },
+            "time": "2020-09-13T07:00:36+00:00"
         },
         {
             "name": "laravel/framework",
@@ -2370,6 +2427,96 @@
                 }
             ],
             "time": "2020-08-18T17:17:46+00:00"
+        },
+        {
+            "name": "realrashid/sweet-alert",
+            "version": "v4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/realrashid/sweet-alert.git",
+                "reference": "4923bb91d7144c2ac5dacda0b5e1472fff3d88af"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/realrashid/sweet-alert/zipball/4923bb91d7144c2ac5dacda0b5e1472fff3d88af",
+                "reference": "4923bb91d7144c2ac5dacda0b5e1472fff3d88af",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^7.0|^8.0",
+                "php": "^7.2|^8.0"
+            },
+            "require-dev": {
+                "symfony/thanks": "^1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "RealRashid\\SweetAlert\\SweetAlertServiceProvider"
+                    ],
+                    "aliases": {
+                        "Alert": "RealRashid\\SweetAlert\\Facades\\Alert"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "RealRashid\\SweetAlert\\": "src/"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rashid Ali",
+                    "email": "realrashid05@gmail.com",
+                    "homepage": "https://realrashid.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A BEAUTIFUL, RESPONSIVE, CUSTOMIZABLE, ACCESSIBLE (WAI-ARIA) REPLACEMENT FOR JAVASCRIPT'S POPUP BOXES FOR LARAVEL BY RASHID ALI",
+            "homepage": "https://github.com/realrashid/sweet-alert",
+            "keywords": [
+                "alert",
+                "laravel",
+                "laravel-package",
+                "notifier",
+                "noty",
+                "sweet-alert",
+                "sweet-alert2",
+                "toast"
+            ],
+            "support": {
+                "docs": "https://realrashid.github.io/sweet-alert/",
+                "email": "realrashid05@gmail.com",
+                "issues": "https://github.com/realrashid/sweet-alert/issues",
+                "source": "https://github.com/realrashid/sweet-alert"
+            },
+            "funding": [
+                {
+                    "url": "https://ko-fi.com/realrashid",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://www.buymeacoffee.com/realrashid",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://issuehunt.io/r/realrashid",
+                    "type": "issuehunt"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/realrashid/sweet-alert",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-06-14T19:01:35+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

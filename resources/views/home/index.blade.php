@@ -22,7 +22,55 @@
 </div>
 @endsection
 @section('content')
-    <div class="container-fluid p-0" style="margin-top:-100px;">
+
+
+    <script>
+        $(document).ready(function(){
+      $("#workshop-slider").owlCarousel({
+        items:1,
+        autoplay:true,
+        margin:20,
+        loop:false,
+        dots:true,
+        smartSpeed: 450,
+        autoplayTimeout: 5000,
+        autoplayHoverPause:true,
+        pagination:true,
+      });
+    });
+    </script>
+
+    <div class="section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="owl-carousel workshop-slider client-testimonial-carousel py-4" id="workshop-slider">
+                        @foreach ($workshops as $workshop)
+                        <div class=" bg-success mb-5 p-3 shadow d-flex justify-center" style="background-image: url({{ asset('assets/images/workshop/'.$workshop->image) }}); height:400px; background-size:cover; background-position:center; border-radius:20px;">
+                            <div class="card border-0 rounded-10 w-100" style="background-color: rgba(0, 0, 0, 0.719)">
+                                <div class="card-body text-white">
+                                    <h3 class="text-white text-center">WorkShop</h3>
+                                    <p class="bg-danger p-0 text-center mx-auto rounded-10" style=" height:2px!important;width:100px;"></p>
+                                    <div class="h5 mt-4 text-light">{{ $workshop->title }}!</div>
+                                    <h6 class=""><strong>Time : </strong>{{ $workshop->time }}</h6>
+                                    <p class="h6 ">{{ $workshop->description }}</p>
+
+                                    <p class="small"><span class="fw-bold">Workshop Date : </span> {{ $workshop->event_date }}</p>
+                                    <span><strong>Registration Fee : ₹ {{ $workshop->fee }} /- </strong></span>
+                                    <p><strong>Registration last Date : {{ $workshop->last_date }} </strong></p>
+
+                                    <a href="" class="btn btn-outline-light rounded-10">Register Now</a>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid p-0 mt-5" style="margin-top:-100px;">
         @include('include.slider')
 
         <div class="container-fluid py-5" style="background-image: url({{ asset('assets/images/d.svg') }}); background-attachment:fixed; background-size:cover; background-position:center;">

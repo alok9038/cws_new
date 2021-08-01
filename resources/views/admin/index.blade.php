@@ -1,4 +1,4 @@
-@extends('layouts.admin_base')
+@extends('layouts.newBase')
 @section('page_title','Admin | CodeWithSadiQ')
 @section('dashboard_select','active')
 @section('content')
@@ -79,7 +79,7 @@
                         <th>Amount</th>
                         <th>Date</th>
                     </tr>
-                    @php
+                    {{-- @php
                         $sr = 0;
                     @endphp
                     @foreach ($get_payments as $payment)
@@ -95,7 +95,7 @@
                             <td>{{ $payment->fee }}</td>
                             <td>{{ $date }}</td>
                         </tr>
-                    @endforeach
+                    @endforeach --}}
                 </table>
             </div>
             <div class="card-footer d-flex border-0 bg-transparent">

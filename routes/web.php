@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CourseController;
+use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\EnrollController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaytmController;
 use App\Http\Controllers\User\MainController;
+use App\Http\Controllers\WorkshopController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/',[HomeController::class,"home"])->name('homepage');
@@ -27,6 +29,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/checkout',[EnrollController::class,'checkout'])->name('checkout');
 
     Route::post('/pay',[EnrollController::class,'payDues'])->name('pay.dues');
+
+    Route::post('/workshop-payment',[WorkshopController::class,'pay'])->name('workshop.paytm.payment');
+    Route::post('/workshop-paytm-callback',[WorkshopController::class,'paytmcallback'])->name('workshop.paytm.callback');
+    // Route::get('payment',[PaytmController::class,'paytmPurchase'])->name('paytm.purchase');
+
+
 
 });
 
@@ -62,10 +70,33 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/students',[AdminController::class,"students"])->name('admin.students');
     Route::get('/filter',[AdminController::class,"students"])->name('view.user.filter');
 
+    Route::get('/payment-settings',[AdminController::class,"paymentSetting"])->name('payment.setting.view');
+    Route::post('/payment-settings',[AdminController::class,"paymentSettingStore"])->name('payment.setting');
+
+    Route::get('/settings',[SiteSettingController::class,"viewSetting"])->name('setting.view');
+    // Route::post('/settings',[SiteSettingController::class,"update"])->name('setting.update');
+
+    Route::get('/workshop',[WorkshopController::class,"index"])->name('admin.workshop.view');
+    Route::get('/workshop-create',[WorkshopController::class,"create"])->name('admin.workshop.create.view');
+    Route::post('/workshop-create',[WorkshopController::class,"store"])->name('admin.workshop.create.store');
+    Route::post('/workshop-delete',[WorkshopController::class,"delete"])->name('admin.drop.workshop');
+
+
+    Route::post('/update-admin-details',[SiteSettingController::class,"updateAdminDetails"])->name('update.admin.details');
+    Route::post('/change-password',[SiteSettingController::class,"changePassword"])->name('change.password');
+
+    Route::post('/update-site-details',[SiteSettingController::class,"updateDetails"])->name('update.site.details');
+    Route::post('/update-logo',[SiteSettingController::class,"logo"])->name('update.site.logo');
+    Route::post('/update-favicon',[SiteSettingController::class,"updateFavicon"])->name('update.site.favicon');
+
 });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+Route::get('/new-desgin', function () {
+    return view('admin2.index');
+});
 
 require __DIR__.'/auth.php';

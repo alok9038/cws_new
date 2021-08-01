@@ -83,6 +83,8 @@
 </style>
 <body style="background-color: white;">
     @include('include.messages')
+    @include('sweetalert::alert')
+
     <!-- Sidebar  -->
     <nav id="sidebar">
         @auth

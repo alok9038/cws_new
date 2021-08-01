@@ -57,3 +57,12 @@
 
 </script>
 @endsection
+
+
+1. Connect to other users : https://uipropitome.com/socialStudy/api/connect
+body{
+    follow_to : id of user whom you want to follow
+}
+
+2. Get Connections : https://uipropitome.com/socialStudy/api/connections
+method:get;

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Enroll;
+use App\Models\Order;
 use App\Models\Paytm;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,12 +15,14 @@ use Illuminate\Support\Facades\Hash;
 class MainController extends Controller
 {
     public function index(){
-        $data['enrolls'] = Enroll::where([['user_id',Auth::id()],['status',true]])->get();
+        $data['enrolls'] = Order::where([['user_id',Auth::id()],['ordered',true]])->get();
         return view('user.index',$data);
     }
 
     public function course(){
-        $data['enrolls'] = Enroll::where([['user_id',Auth::id()],['status',true]])->get();
+        // $data['enrolls'] = Enroll::where([['user_id',Auth::id()],['status',true]])->get();
+        $data['enrolls'] = Order::where([['user_id',Auth::id()],['ordered',true]])->get();
+
         return view('user.myCourse',$data);
     }
 
