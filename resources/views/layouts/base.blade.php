@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('page_title')</title>
+
+    <link rel="icon" href="{{ asset('storage/favicon/'.site()->favicon) }}" type="image/png" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <!-- custom css -->
@@ -276,10 +278,10 @@
                                 <span class="bg-success" style="width:90px;"></span>
                             </div>
                             <ul class="footer-ul">
-                                <li class="footer-li"><a href="" class="text-decoration-none facebook"><i class="fa fa-facebook-square fa-2x me-2"></i> Facebook</a></li>
-                                <li class="footer-li"><a href="" class="text-decoration-none linkedin"><i class="fa fa-linkedin-square fa-2x me-2"></i>Linkedin</a></li>
-                                <li class="footer-li"><a href="" class="text-decoration-none github"><i class="fa fa-github-square fa-2x me-2"></i>GitHub</a></li>
-                                <li class="footer-li"><a href="" class="text-decoration-none twitter"><i class="fa fa-twitter-square fa-2x me-2"></i>Twitter</a></li>
+                                <li class="footer-li"><a href="{{ site()->facebook }}" class="text-decoration-none facebook"><i class="fa fa-facebook-square fa-2x me-2"></i> Facebook</a></li>
+                                <li class="footer-li"><a href="{{ site()->linkedin }}" class="text-decoration-none linkedin"><i class="fa fa-linkedin-square fa-2x me-2"></i>Linkedin</a></li>
+                                <li class="footer-li"><a href="{{ site()->github }}" class="text-decoration-none github"><i class="fa fa-github-square fa-2x me-2"></i>GitHub</a></li>
+                                <li class="footer-li"><a href="{{ site()->twitter }}" class="text-decoration-none twitter"><i class="fa fa-twitter-square fa-2x me-2"></i>Twitter</a></li>
                             </ul>
                         </div>
                     </div>

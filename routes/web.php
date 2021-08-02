@@ -80,6 +80,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/workshop-create',[WorkshopController::class,"create"])->name('admin.workshop.create.view');
     Route::post('/workshop-create',[WorkshopController::class,"store"])->name('admin.workshop.create.store');
     Route::post('/workshop-delete',[WorkshopController::class,"delete"])->name('admin.drop.workshop');
+    Route::get('/workshop-enrolled',[WorkshopController::class,"enrolled_student"])->name('admin.workshop.enrolled');
 
 
     Route::post('/update-admin-details',[SiteSettingController::class,"updateAdminDetails"])->name('update.admin.details');

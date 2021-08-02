@@ -8,13 +8,13 @@
                 <div class="card-header border-0 bg-transparent">
                 </div>
                 <div class="card-body">
-                    <h5 class="text-center">Logo </h5>
+                    {{-- <h5 class="text-center">Logo </h5>
                     <div class="d-flex">
                         <img src="{{ asset('storage/logo/'.site()->logo) }}" class="img-fluid mx-auto" style="height: 150px; width:200px;" alt="logo">
                     </div>
                     <div class="mb-3">
                         <button data-toggle="modal" data-target="#updateLogo" class="btn border-0 shadow-none d-flex mx-auto text-muted"><i class="fa fa-edit"></i> Change</button>
-                    </div>
+                    </div> --}}
                     <form action="{{ route('update.site.favicon') }}" enctype="multipart/form-data" method="post">
                         @csrf
                         <div class="row mb-5">
@@ -84,7 +84,7 @@
                         <div class="row">
                             <div class="mb-3 col">
                                 <label class="fw-bold">Name</label>
-                                <input type="text" name="name" value="{{ Auth()->user()->last_name }}" class="form-control shadow-none">
+                                <input type="text" name="name" value="{{ Auth()->user()->name }}" class="form-control shadow-none">
                             </div>
                         </div>
                         <div class="mb-3">

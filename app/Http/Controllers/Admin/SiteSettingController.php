@@ -97,24 +97,24 @@ class SiteSettingController extends Controller
     }
 
     public function updateDetails(Request $request){
-        $request->validate([
-            'contact'=>'required|size:10',
-            'address'=>'required',
-            'about_us'=>'required',
-            'facebook'=>'required',
-            'twitter'=>'required',
-            'linkedin'=>'required',
-            'google'=>'required',
-        ]);
+        // $request->validate([
+        //     // 'contact'=>'required|size:10',
+        //     // 'address'=>'required',
+        //     // 'about_us'=>'required',
+        //     // 'facebook'=>'required',
+        //     // 'twitter'=>'required',
+        //     // 'linkedin'=>'required',
+        //     // 'google'=>'required',
+        // ]);
 
         SiteSetting::first()->update([
             'contact'=>$request->contact,
             'address'=>$request->address,
-            'about_us'=>$request->about_us,
+            'about'=>$request->about_us,
             'facebook'=>$request->facebook,
             'twitter'=>$request->twitter,
             'linkedin'=>$request->linkedin,
-            'google'=>$request->google,
+            'github'=>$request->github,
         ]);
 
         Alert::toast('Site Details Successfully Updated!','success');

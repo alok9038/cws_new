@@ -35,6 +35,13 @@
             <div class="menu-title">Workshop</div>
         </a>
     </li>
+    <li class="@yield('workshop_enrolled_select')">
+        <a href="{{ route('admin.workshop.enrolled') }}">
+            <div class="parent-icon"><i class='bx bx-user'></i>
+            </div>
+            <div class="menu-title">Workshop Enrolled</div>
+        </a>
+    </li>
     <li class="@yield('earning_select')">
         <a href="{{ route('admin.due.payments') }}">
             <div class="parent-icon"><i class='bx bx-dollar'></i>

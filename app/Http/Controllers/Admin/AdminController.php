@@ -22,7 +22,7 @@ class AdminController extends Controller
         }
         $data['course'] = Course::count();
         $data['users'] = User::where('user_type','!=','admin')->count();
-        $data['payments'] = Paytm::where('status','1')->get();
+        $data['payments'] = Paytm::where([['status','1'],['enroll_id','!=',null]])->get();
         $data['get_payments'] = Paytm::where([['created_at','>=',Carbon::now()->subdays(30)],['status',1]])->orderBy('id','desc')->paginate(10);
         $data['dues'] = Enroll::where([['payment','installment'],['status',1]])->get();
 
@@ -41,7 +41,8 @@ class AdminController extends Controller
     }
 
     public function duePayments(){
-        $data['enrolls'] = Enroll::where([['status',true],['payment','installment']])->get();
+        $data['enrolls'] = Paytm::where('status',true)->orderBy('id','desc')->get();
+        // die;
         return view('admin.due_payments',$data);
     }
 

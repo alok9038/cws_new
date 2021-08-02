@@ -90,13 +90,17 @@ class WorkshopController extends Controller
         }
     }
 
+    public function enrolled_student(){
+        $data['enrolls'] = WorkshopEnroll::orderBy('id','desc')->get();
+        return view('admin.workshop_enrolled_students',$data);
+    }
+
     public function pay(Request $request)
     {
 
         $id = $request->workshop_id;
         $amount = $request->amount;
         $user_id = Auth::id();
-
         $userData = [
             'name' => Auth::user()->name, // Name of user
             'mobile' =>Auth::user()->contact, //Mobile number of user
@@ -157,7 +161,7 @@ class WorkshopController extends Controller
             return redirect()->route('homepage');
 
         }
-        $transaction->getResponseMessage(); //Get Response Message If Available
+        echo $transaction->getResponseMessage(); //Get Response Message If Available
 
         // $transaction->getOrderId(); // Get order id
     }

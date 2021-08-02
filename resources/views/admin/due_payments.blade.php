@@ -15,7 +15,7 @@
                     <tr>
                         <th>Sr no.</th>
                         <th>Student Name</th>
-                        <th>Course</th>
+                        {{-- <th>Course</th> --}}
                         <th>Amount</th>
                         <th>Date</th>
                     </tr>
@@ -30,14 +30,14 @@
                                 $paid_amount += $paid->fee;
                             }
                             $sr += 1;
-                            $time = strtotime($enroll->pay->created_at);
+                            $time = strtotime($enroll->created_at);
                             $date = date("d M Y",$time );
                         @endphp
                         <tr>
                             <td>{{ $sr }}</td>
-                            <td>{{ $enroll->pay->student->name }}</td>
-                            <td>{{ $enroll->course->title }}</td>
-                            <td class="text-success fw-bold">₹ {{ $enroll->course->discount_price  - $paid_amount }}</td>
+                            <td>{{ $enroll->student->name }}</td>
+                            {{-- <td>{{ $enroll->course->title }}</td> --}}
+                            <td class="text-success fw-bold">₹ {{ $enroll->fee }}</td>
                             <td>{{ $date }}</td>
                         </tr>
                     @endforeach

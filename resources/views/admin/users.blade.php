@@ -1,5 +1,5 @@
 @extends('layouts.newBase')
-@section('page_title','Create Course | Admin')
+@section('page_title','Students | Admin')
 @section('user_select','mm-active')
 @section('content')
 @section('css')

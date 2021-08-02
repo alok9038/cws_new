@@ -59,7 +59,12 @@
                                     <span><strong>Registration Fee : ₹ {{ $workshop->fee }} /- </strong></span>
                                     <p><strong>Registration last Date : {{ $workshop->last_date }} </strong></p>
 
-                                    <a href="" class="btn btn-outline-light rounded-10">Register Now</a>
+                                    <form action="{{ route('workshop.paytm.payment') }}" method="post">
+                                        @csrf
+                                        <input type="text" name="workshop_id" value="{{ $workshop->id }}" hidden >
+                                        <input type="text" name="amount" value="{{ $workshop->fee }}" hidden >
+                                        <button type="submit" class="btn btn-outline-light rounded-10">Register Now</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
