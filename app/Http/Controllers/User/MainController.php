@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Back_due;
 use App\Models\Enroll;
 use App\Models\Order;
 use App\Models\Paytm;
@@ -16,6 +17,9 @@ class MainController extends Controller
 {
     public function index(){
         $data['enrolls'] = Order::where([['user_id',Auth::id()],['ordered',true]])->get();
+        $data['total_amounts'] = Enroll::where([['user_id',Auth::id()],['status',true]])->get();
+        $data['payments'] = Paytm::where([['user_id',Auth::id()],['status',true],['enroll_id','!=',null]])->get();
+        $data['back_dues'] = Back_due::where([['user_id',Auth::id()],['status',false]])->first();
         return view('user.index',$data);
     }
 
@@ -27,7 +31,7 @@ class MainController extends Controller
     }
 
     public function payment(){
-        $data['payments'] = Paytm::where('user_id',Auth::id())->orderBy('id','desc')->paginate(10);
+        $data['payments'] = Paytm::where([['user_id',Auth::id()],['status',true]])->orderBy('id','desc')->paginate(10);
         return view('user.payments',$data);
     }
     public function paymentRecords($slug, $id){

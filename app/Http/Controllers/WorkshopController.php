@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Anand\LaravelPaytmWallet\Facades\PaytmWallet;
+use App\Models\Back_due;
 use App\Models\Paytm;
 use App\Models\Workshop;
 use App\Models\WorkshopEnroll;
@@ -99,6 +100,8 @@ class WorkshopController extends Controller
     {
 
         $id = $request->workshop_id;
+        $back_due_id = $request->back_due_id;
+
         $amount = $request->amount;
         $user_id = Auth::id();
         $userData = [
@@ -107,8 +110,9 @@ class WorkshopController extends Controller
             'email' => Auth::user()->email, //Email of user
             'fee' => $amount,
             'user_id'=>Auth::id(),
-            'order_id' =>Auth::user()->name.'_'.rand(1,999999), //Order id
-            'workshop_id' =>$id //Order id
+            'order_id' =>rand(1,999999), //Order id
+            'workshop_id' =>$id, //Order id
+            'back_dues_id' =>$back_due_id //Order id
         ];
 
         Paytm::create($userData); // creates a new database record
@@ -140,13 +144,18 @@ class WorkshopController extends Controller
             Paytm::where([['order_id', $order_id],['user_id',$user_id]])->update(['status' => 1, 'transaction_id' => $transaction->getTransactionId()]);
             $payment = Paytm::where('order_id',$order_id)->first();
 
-            $w = new WorkshopEnroll();
-            $w->user_id = Auth::id();
-            $w->payment_id = $payment->id;
-            $w->workshop_id = $payment->workshop_id;
-            $w->save();
+            if($payment->workshop_id != null){
+                $w = new WorkshopEnroll();
+                $w->user_id = Auth::id();
+                $w->payment_id = $payment->id;
+                $w->workshop_id = $payment->workshop_id;
+                $w->save();
+            }
+            else{
+                Back_due::where('id',$payment->back_dues_id)->update(['status'=>1]);
+            }
 
-            toast('Payment of '."$payment->fee".' is successfully Done!','success');
+            toast('Payment of ₹ '."$payment->fee".' is successfully Done!','success');
             return redirect()->route('homepage');
 
         } else if ($transaction->isFailed()) {

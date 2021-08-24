@@ -26,11 +26,15 @@ class EnrollController extends Controller
 
         $course_id = $request->course_id;
 
-        $check = Enroll::where([['user_id',Auth::id()],['status','1']])->get();
+        $check = Enroll::where([['user_id',Auth::id()],['status',0]])->get();
 
         $count = Course::where('id',$course_id)->get();
         $user =  Auth::id();
 
+        if($check->count() > 0){
+            toast('Course Already in Your Cart!','info');
+            return redirect()->route('get.enroll');
+        }
         if(count($count) > 0){
             $order = Order::where([['user_id',$user],['ordered',false]])->get();
             if(count($order) > 0){
@@ -114,30 +118,45 @@ class EnrollController extends Controller
 
         $id = Crypt::encryptString($enroll_id.'_'.$amount);
 
-        $enroll = Order::where([['user_id',$user_id],['id',$enroll_id]])->first();
+        $enroll = Order::where([['user_id',$user_id],['id',$enroll_id]])->get();
 
-        // $course_charge = $enroll[0]->course->discount_price;
+        $cc = 0;
+        foreach($enroll as $e)
+        {
+            foreach ($e->InCart as $enroll){
+                $cc += $enroll->course->discount_price;
+            }
 
-        $course_charge = 0;
-        foreach($enroll->InCart as $enroll){
-            $course_charge += $enroll->course->discount_price;
+            $tt = 0;
+            foreach (pp($enroll->order_id) as $try) {
+                $tt += $try->fee;
+            }
         }
 
-        $payment = Paytm::where([['user_id',$user_id],['enroll_id',$enroll_id],['status',false]])->get();
-        $total_pay = 0;
-        foreach($payment as $p){
-            $total_pay += $p->fee;
-        }
+        $total_dues = $cc - $tt;
 
-        $dues = $course_charge - $total_pay;
+        // $total = Enroll::where([['user_id',Auth::id()],['status',true]])->get();
+        // $payments = Paytm::where([['user_id',Auth::id()],['status',true],['workshop_id',null]])->get();
 
-        // if(count($enroll->InCart) > 0){
-            if($dues >= $amount){
-                return redirect()->route('paytm.payment',['id'=>$id]);
-            }
-            else{
-                return redirect()->back()->with('error_msg','This Amount is greater than your Dues amount!');
-            }
+        // $total_amount =0;
+        // foreach($total as $t){
+        //     $total_amount += $t->course->discount_price;
         // }
+        // $dues =0;
+        // foreach($payments as $p){
+        //     $dues += $p->fee;
+        // }
+
+        // $total_dues = $total_amount - $dues;
+
+        // die;
+        if($total_dues >= $amount){
+            return redirect()->route('paytm.payment',['id'=>$id]);
+        }
+        else{
+            toast('₹ .'.$amount.'. Amount Is Greater than Dues Amount!');
+            return redirect()->back();
+        }
+
     }
 }

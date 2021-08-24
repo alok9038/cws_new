@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Back_due;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -63,6 +64,12 @@ class RegisteredUserController extends Controller
             'image' => $image,
             'password' => Hash::make($request->password),
         ]);
+
+        $due = new Back_due();
+        $due->user_id = $user->id;
+        $due->amount = 700;
+        $due->status = false;
+        $due->save();
 
         event(new Registered($user));
 

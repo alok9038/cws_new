@@ -54,22 +54,6 @@
 				<nav class="navbar navbar-expand">
 					<div class="mobile-toggle-menu"><i class='bx bx-menu'></i>
 					</div>
-					{{-- <div class="top-menu-left d-none d-lg-block">
-						<ul class="nav">
-						  <li class="nav-item">
-							<a class="nav-link" href="app-emailbox.html"><i class='bx bx-envelope'></i></a>
-						  </li>
-						  <li class="nav-item">
-							<a class="nav-link" href="app-chat-box.html"><i class='bx bx-message'></i></a>
-						  </li>
-						  <li class="nav-item">
-							<a class="nav-link" href="app-fullcalender.html"><i class='bx bx-calendar'></i></a>
-						  </li>
-						  <li class="nav-item">
-							  <a class="nav-link" href="app-to-do.html"><i class='bx bx-check-square'></i></a>
-						  </li>
-					  </ul>
-					 </div> --}}
 					<div class="search-bar flex-grow-1">
 						<div class="position-relative search-bar-box">
 							<input type="text" class="form-control search-control" placeholder="Type to search..."> <span class="position-absolute top-50 search-show translate-middle-y"><i class='bx bx-search'></i></span>
@@ -79,7 +63,7 @@
 					<div class="top-menu ms-auto">
 						<ul class="navbar-nav align-items-center">
 							<li class="nav-item mobile-search-icon">
-								<a class="nav-link" href="#">	<i class='bx bx-search'></i>
+								<a class="nav-link" href="#">	<i class='bx bx-eye'></i>
 								</a>
 							</li>
 							<li class="nav-item dropdown dropdown-large">
@@ -87,35 +71,41 @@
 								</a>
 								<div class="dropdown-menu dropdown-menu-end">
 									<div class="row row-cols-3 g-3 p-3">
+                                        <div class="col text-center">
+											<div class="app-box mx-auto bg-gradient-kyoto text-dark"><i class='bx bxs-dashboard'></i>
+											</div>
+                                            <a href="{{ route('admin.dashboard') }}" class="stretched-link"></a>
+											<div class="app-title">Dashboard</div>
+										</div>
 										<div class="col text-center">
 											<div class="app-box mx-auto bg-gradient-cosmic text-white"><i class='bx bx-group'></i>
 											</div>
-											<div class="app-title">Teams</div>
+                                            <a href="{{ route('admin.students') }}" class="stretched-link"></a>
+											<div class="app-title">Students</div>
 										</div>
 										<div class="col text-center">
 											<div class="app-box mx-auto bg-gradient-burning text-white"><i class='bx bx-atom'></i>
 											</div>
-											<div class="app-title">Projects</div>
+                                            <a href="{{ route('admin.workshop.view') }}" class="stretched-link"></a>
+											<div class="app-title">Workshops</div>
 										</div>
 										<div class="col text-center">
-											<div class="app-box mx-auto bg-gradient-lush text-white"><i class='bx bx-shield'></i>
+											<div class="app-box mx-auto bg-gradient-lush text-white"><i class='bx bx-rupee'></i>
 											</div>
-											<div class="app-title">Tasks</div>
+                                            <a href="{{ route('admin.due.payments') }}" class="stretched-link"></a>
+											<div class="app-title">Payments</div>
+										</div>
+
+										<div class="col text-center">
+											<div class="app-box mx-auto bg-gradient-blues text-dark"><i class='bx bx-book-content'></i>
+											</div>
+                                            <a href="{{ route('view.courses') }}" class="stretched-link"></a>
+											<div class="app-title">Course</div>
 										</div>
 										<div class="col text-center">
-											<div class="app-box mx-auto bg-gradient-kyoto text-dark"><i class='bx bx-notification'></i>
+											<div class="app-box mx-auto bg-gradient-moonlit text-white"><i class='bx bx-cog'></i>
 											</div>
-											<div class="app-title">Feeds</div>
-										</div>
-										<div class="col text-center">
-											<div class="app-box mx-auto bg-gradient-blues text-dark"><i class='bx bx-file'></i>
-											</div>
-											<div class="app-title">Files</div>
-										</div>
-										<div class="col text-center">
-											<div class="app-box mx-auto bg-gradient-moonlit text-white"><i class='bx bx-filter-alt'></i>
-											</div>
-											<div class="app-title">Alerts</div>
+											<div class="app-title">Settings</div>
 										</div>
 									</div>
 								</div>

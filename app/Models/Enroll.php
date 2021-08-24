@@ -16,4 +16,7 @@ class Enroll extends Model
     public function pay(){
         return $this->hasOne('App\Models\Paytm','enroll_id','id');
     }
+    public function order(){
+        return $this->hasOne('App\Models\Order','id','order_id');
+    }
 }

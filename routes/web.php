@@ -7,12 +7,13 @@ use App\Http\Controllers\EnrollController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaytmController;
 use App\Http\Controllers\User\MainController;
+use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\WorkshopController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/',[HomeController::class,"home"])->name('homepage');
 
-Route::get('/course/{slug}/{id}',[HomeController::class,"viewCourse"])->name('home.course.view');
+Route::get('/course/{slug}',[HomeController::class,"viewCourse"])->name('home.course.view');
 
 Route::get('/forgot-password',[HomeController::class,'forgotPassword'])->name('forgot.password');
 
@@ -35,12 +36,15 @@ Route::middleware('auth')->group(function () {
     // Route::get('payment',[PaytmController::class,'paytmPurchase'])->name('paytm.purchase');
 
 
+    Route::get('payment/{id}',[PaytmController::class,'pay'])->name('paytm.payment');
+    Route::post('paytm-callback',[PaytmController::class,'paytmcallback'])->name('paytm.callback');
+    Route::get('payment',[PaytmController::class,'paytmPurchase'])->name('paytm.purchase');
+
+    Route::post('update-profile-image',[UserController::class,"updateDp"])->name('update.dp');
+    Route::post('update-details',[UserController::class,"updateDetails"])->name('update.details');
 
 });
 
-Route::get('payment/{id}',[PaytmController::class,'pay'])->name('paytm.payment');
-Route::post('paytm-callback',[PaytmController::class,'paytmcallback'])->name('paytm.callback');
-Route::get('payment',[PaytmController::class,'paytmPurchase'])->name('paytm.purchase');
 
 
 Route::prefix('user')->middleware('auth')->group(function () {
@@ -60,15 +64,22 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/',[AdminController::class,"index"])->name('admin.dashboard');
 
     Route::get('/earning',[AdminController::class,"earning"])->name('admin.earning');
-    Route::get('/due-payments',[AdminController::class,"duePayments"])->name('admin.due.payments');
+    Route::get('/payments',[AdminController::class,"duePayments"])->name('admin.due.payments');
+
+    Route::get('/back-dues',[AdminController::class,"backDues"])->name('admin.back.due');
+    Route::post('/update-status',[AdminController::class,"backDuesStatus"])->name('admin.back.due.update');
+    Route::post('/update-dues-amount',[AdminController::class,"updateDuesAmount"])->name('admin.back.due.amount');
 
     Route::get('/courses',[CourseController::class,"viewCourse"])->name('view.courses');
     Route::get('/add-course',[CourseController::class,"addCourse"])->name('add.course.view');
     Route::post('/add-course',[CourseController::class,"storeCourse"])->name('add.course');
+    Route::get('/edit-course/{id}',[CourseController::class,"edit"])->name('edit.course.view');
+    Route::post('/edit-course',[CourseController::class,"updateCourse"])->name('update.course');
     Route::delete('/drop-course',[CourseController::class,"dropCourse"])->name('drop.course');
 
     Route::get('/students',[AdminController::class,"students"])->name('admin.students');
-    Route::get('/filter',[AdminController::class,"students"])->name('view.user.filter');
+    Route::post('/delete',[AdminController::class,"deleteStudent"])->name('delete.student');
+    // Route::get('/filter',[AdminController::class,"students"])->name('view.user.filter');
 
     Route::get('/payment-settings',[AdminController::class,"paymentSetting"])->name('payment.setting.view');
     Route::post('/payment-settings',[AdminController::class,"paymentSettingStore"])->name('payment.setting');
@@ -81,7 +92,6 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::post('/workshop-create',[WorkshopController::class,"store"])->name('admin.workshop.create.store');
     Route::post('/workshop-delete',[WorkshopController::class,"delete"])->name('admin.drop.workshop');
     Route::get('/workshop-enrolled',[WorkshopController::class,"enrolled_student"])->name('admin.workshop.enrolled');
-
 
     Route::post('/update-admin-details',[SiteSettingController::class,"updateAdminDetails"])->name('update.admin.details');
     Route::post('/change-password',[SiteSettingController::class,"changePassword"])->name('change.password');

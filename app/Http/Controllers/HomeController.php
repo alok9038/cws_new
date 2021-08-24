@@ -16,9 +16,9 @@ class HomeController extends Controller
         $data['workshops'] =  Workshop::where([['last_date','>=',$last_date],['created_at','<=',$mytime]])->get();
         return view('home.index',$data);
     }
-    public function viewCourse($slug, $id){
-        $c_id =  Crypt::decrypt($id);
-        $data['course'] = Course::where('id',$c_id)->first();
+    public function viewCourse($slug){
+        // $c_id =  Crypt::decrypt($id);
+        $data['course'] = Course::where('slug',$slug)->first();
         return view('home.course',$data);
     }
 

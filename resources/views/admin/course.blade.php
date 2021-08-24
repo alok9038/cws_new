@@ -35,11 +35,11 @@
                                     <td>{{ $i }}</td>
                                     <td><div class="rounded-10 cws-shadow" style="height: 50px; width:55px;"><img src="{{ asset('assets/images/course/'.$course->image) }}" style="height: 50px; width:55px;" class="img-fluid rounded-10" alt="{{ $course->image }}"></div></td>
                                     <td>{{ $course->title }}</td>
-                                    <td>{{ $course->price }}</td>
-                                    <td>{{ $course->discount_price }}</td>
+                                    <td>₹ {{ $course->price }}</td>
+                                    <td>₹ {{ $course->discount_price }}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <button class="btn rounded-0 btn-sm shadow-none btn-light-secondary"><i class="bx bx-edit"></i></button>
+                                            <a href="{{ route('edit.course.view',['id'=>$course->id]) }}" class="btn rounded-0 btn-sm shadow-none btn-light-secondary"><i class="bx bx-edit"></i></a>
 
                                             <form action="{{ route('drop.course') }}" method="post">
                                                 @csrf

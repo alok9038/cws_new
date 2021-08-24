@@ -19,7 +19,7 @@
             <div class="col">
                 <div class="card cws-shadow border-0 border-start border-3 border-info rounded-0">
                     <div class="card-header bg-white border-0 rounded-0">
-                        Total Users
+                        Total Students
                     </div>
                     <div class="card-body d-flex">
                         <span><h2>{{ $users }}</h2></span>
@@ -75,11 +75,11 @@
                     <tr>
                         <th>Sr no.</th>
                         <th>Student Name</th>
-                        <th>Course</th>
+                        {{-- <th>Course</th> --}}
                         <th>Amount</th>
                         <th>Date</th>
                     </tr>
-                    {{-- @php
+                    @php
                         $sr = 0;
                     @endphp
                     @foreach ($get_payments as $payment)
@@ -91,11 +91,11 @@
                         <tr>
                             <td>{{ $sr }}</td>
                             <td>{{ $payment->student->name }}</td>
-                            <td>{{ $payment->enrolled_course->course->title }}</td>
-                            <td>{{ $payment->fee }}</td>
+                            {{-- <td>{{ $payment->enrolled_course->course->title }}</td> --}}
+                            <td>₹ {{ $payment->fee }}</td>
                             <td>{{ $date }}</td>
                         </tr>
-                    @endforeach --}}
+                    @endforeach
                 </table>
             </div>
             <div class="card-footer d-flex border-0 bg-transparent">

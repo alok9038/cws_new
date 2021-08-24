@@ -245,7 +245,7 @@
                     <div class="col d-lg-flex align-items-center justify-content-center">
                         <div>
                             <div class="d-flex">
-                                <span><img src="https://www.codewithsadiq.com/images/sadiq.jfif" class="img-fluid rounded-15" style="height:90px; width:90px;" alt=""></span>
+                                <span><img src="https://avatars.githubusercontent.com/u/32757358?v=4" class="img-fluid rounded-15" style="height:90px; width:90px;" alt=""></span>
                                 <span class="mt-2 ms-2">SadiQue Hussain <br><p class="small">tutor</p></span>
                             </div>
                             <ul class="footer-ul mt-4">
@@ -309,7 +309,7 @@
                 </div>
             </div>
             <div class="container py-3 border-top">
-                <h6 class="text-center small"><span>© 2021 | CodeWithSadiQ. All Rights Reserved</span></h6>
+                <h6 class="text-center small"><span>© 2021 | CodeWithSadiQ. All Rights Reserved | Developed By : <a href="https://github.com/alok9038" target="_blank" class="text-decoration-none">alok</a></span></h6>
             </div>
         </div>
     </footer>

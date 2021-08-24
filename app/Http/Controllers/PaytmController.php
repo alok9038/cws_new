@@ -36,7 +36,7 @@ class PaytmController extends Controller
             Enroll::where([['order_id',$payment->enroll_id],['user_id',$user_id]])->update(['status'=>true]);
             Order::where([['id',$payment->enroll_id],['user_id',$user_id]])->update(['ordered'=>true]);
 
-            toast('Payment of '."$payment->fee".' is successfully Done!','success');
+            toast('Payment of ₹ '."$payment->fee".' is successfully Done!','success');
             return redirect()->route('homepage');
 
         } else if ($transaction->isFailed()) {

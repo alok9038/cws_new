@@ -40,7 +40,8 @@
     });
     </script>
 
-    <div class="section-padding">
+    @if ($workshops->count() > 0)
+    <div class="section-padding mt-0 pt-0">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -75,7 +76,8 @@
         </div>
     </div>
 
-    <div class="container-fluid p-0 mt-5" style="margin-top:-100px;">
+    @endif
+    <div class="container-fluid p-0" style="margin-top:-100px;">
         @include('include.slider')
 
         <div class="container-fluid py-5" style="background-image: url({{ asset('assets/images/d.svg') }}); background-attachment:fixed; background-size:cover; background-position:center;">
@@ -108,11 +110,11 @@
                             $courses = courses();
                         @endphp
                         @foreach ($courses as $course)
-                        @php
+                        {{-- @php
                            $course_id = \Crypt::encrypt($course->id)
-                        @endphp
+                        @endphp --}}
                         <div class="col mb-4">
-                            <a href="{{ route('home.course.view',['slug'=>$course->slug, 'id'=>$course_id]) }}" class="" title="{{ $course->title }}">
+                            <a href="{{ route('home.course.view',['slug'=>$course->slug]) }}" class="" title="{{ $course->title }}">
                                 <div class="card border-0 rounded-15 cws-shadow-md">
                                     <div class="card-img-top rounded-15">
                                         <img src="{{ asset('assets/images/course/'.$course->image) }}" class="img-fluid rounded-15 w-100" style="height: 233px;  object-fit:cover;" alt="$course->image">

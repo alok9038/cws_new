@@ -36,6 +36,7 @@ class CourseController extends Controller
             'image' => 'required',
             'description' => 'required',
             'duration' => 'required',
+            'course_type' => 'required',
         ]);
         $slug = Str::slug($request->title,'-');
 
@@ -46,14 +47,64 @@ class CourseController extends Controller
         $course->title = $request->title;
         $course->price = $request->price;
         $course->discount_price = $request->discount_price;
+        if($request->hasFile('banner_image')){
+            $banner = time() ."-". $slug . "." . $request->banner_image->extension();
+            $request->banner_image->move(public_path("assets/images/course/banner"),$banner);
+            $course->banner_image = $banner;
+        }
         $course->image = $image;
         $course->description = $request->description;
         $course->duration = $request->duration;
+        $course->course_type = $request->course_type;
         $course->featured = $request->featured;
         $course->slug = $slug;
         $course->save();
 
         return redirect()->route('view.courses')->with('success_msg','Course Successfully Added!');
+    }
+
+    public function edit($id){
+        $data['course'] = Course::where('id',$id)->first();
+        return view('admin.edit_course',$data);
+    }
+
+    public function updateCourse(Request $request){
+        if(Auth::user()->user_type !== 'admin'){
+            return redirect()->route('login');
+        }
+        $request->validate([
+            'title' => 'required',
+            'discount_price' => 'required',
+            'description' => 'required',
+            'duration' => 'required',
+            'course_type' => 'required',
+        ]);
+
+
+        $slug = Str::slug($request->title,'-');
+
+        $course = Course::where('id',$request->course_id)->first();
+        $course->title = $request->title;
+        $course->price = $request->price;
+        $course->discount_price = $request->discount_price;
+        if($request->hasFile('banner_image')){
+            $banner = time() ."-". $slug . "." . $request->banner_image->extension();
+            $request->banner_image->move(public_path("assets/images/course/banner"),$banner);
+            $course->banner_image = $banner;
+        }
+        if($request->hasFile('image')){
+            $image = time() ."-". $slug . "." . $request->image->getClientOrignalName();
+            $request->image->move(public_path("assets/images/course"),$image);
+            $course->image = $image;
+        }
+        $course->description = $request->description;
+        $course->duration = $request->duration;
+        $course->course_type = $request->course_type;
+        $course->featured = $request->featured;
+        $course->save();
+
+        toast('Course Updated!','success');
+        return redirect()->route('view.courses');
     }
 
     public function dropCourse(Request $request){

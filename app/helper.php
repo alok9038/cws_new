@@ -62,7 +62,7 @@ if(!function_exists('site')){
 
 if(!function_exists('check_enroll')){
     function check_enroll($course_id){
-        $check_enroll = Enroll::where([['course_id',$course_id],['user_id',Auth::id()]])->get();
+        $check_enroll = Enroll::where([['course_id',$course_id],['user_id',Auth::id()],['status',true]])->get();
         return $check_enroll;
     }
 }
@@ -77,11 +77,21 @@ if(!function_exists('course_amount')){
 
 if(!function_exists('dues_amount')){
     function dues_amount($id){
-        $enroll =  Order::where([['user_id',$id],['ordered',true]])->get();
+        $enroll =  Paytm::where([['user_id',$id],['status',true],['enroll_id','!=',null]])->get();
+        return $enroll;
+    }
+}
+
+
+
+if(!function_exists('pp')){
+    function pp($id){
+        $enroll =  Paytm::where([['user_id',Auth::id()],['status',true],['enroll_id',$id]])->get();
 
         return $enroll;
     }
 }
+
 
 
 

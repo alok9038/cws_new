@@ -1,8 +1,13 @@
 @extends('layouts.base')
 @section('page_title','CodeWithSadiQ')
 @section('content')
-    <div class="container py-5">
-        <div class="card border-0  rounded-15">
+@if ($course->banner_image !== null)
+<div class="container-fluid border px-0" style="margin-top:-30px;background: url({{ asset('assets/images/course/banner/'.$course->banner_image) }});background-size:cover;background-position:center; height:300px;">
+    <div class="container-fluid " style="height: 300px; background:rgba(0, 0, 0, 0.473);"></div>
+</div>
+@endif
+    <div class="container py-5" style="{{ ($course->banner_image !== null)?"margin-top: -150px;":"" }}">
+        <div class="card border-0 cws-shadow rounded-15">
             <div class="card-body">
                 <div class="row">
                     <div class="col-lg-4 mb-4">
@@ -13,7 +18,8 @@
                     <div class="col-lg-8">
                         <h5 class="h3 fw-bold">{{ $course->title }}</h5>
                         <p class="text-success mt-4" style="font-size: 20px;">₹ {{ $course->discount_price }} /- month</p>
-                        <p>{{ $course->description }}</p>
+                        <span class="mb-3"><strong>Duration : {{ $course->duration }} months</strong></span>
+                        <p class="mt-4">{{ $course->description }}</p>
 
                         @if (check_enroll($course->id)->count() != 1)
                         <form action="{{ route('enroll') }}" method="post">
@@ -50,7 +56,7 @@
                     @endphp
                     @foreach ($related_courses as $rc)
                     <div class="col mb-4">
-                        <a href="{{ route('home.course.view',['slug'=>$rc->slug, 'id'=>$rc->id]) }}" class="" title="{{ $rc->title }}">
+                        <a href="{{ route('home.course.view',['slug'=>$rc->slug]) }}" class="" title="{{ $rc->title }}">
                             <div class="card border-0 rounded-15 cws-shadow-md">
                                 <div class="card-img-top rounded-15">
                                     <img src="{{ asset('assets/images/course/'.$rc->image) }}" class="img-fluid rounded-15" style="height: 233px;  object-fit:cover;" alt="$course->image">

@@ -2,14 +2,14 @@
 <ul class="metismenu" id="menu">
     <li>
         <a href="{{ route('admin.dashboard') }}">
-            <div class="parent-icon"><i class='bx bx-home-circle'></i>
+            <div class="parent-icon"><i class='bx bxs-dashboard'></i>
             </div>
             <div class="menu-title">Dashboard</div>
         </a>
     </li>
     <li class="@yield('course_select')">
         <a href="{{ route('view.courses') }}">
-            <div class="parent-icon"><i class='bx bx-copyright'></i>
+            <div class="parent-icon"><i class='bx bx-book-content'></i>
             </div>
             <div class="menu-title">Manage Course</div>
         </a>
@@ -30,7 +30,7 @@
     </li>
     <li class="@yield('workshop_select')">
         <a href="{{ route('admin.workshop.view') }}">
-            <div class="parent-icon"><i class='bx bx-user'></i>
+            <div class="parent-icon"><i class='bx bx-network-chart'></i>
             </div>
             <div class="menu-title">Workshop</div>
         </a>
@@ -44,15 +44,22 @@
     </li>
     <li class="@yield('earning_select')">
         <a href="{{ route('admin.due.payments') }}">
-            <div class="parent-icon"><i class='bx bx-dollar'></i>
+            <div class="parent-icon"><i class='bx bx-rupee'></i>
             </div>
             <div class="menu-title">Payments</div>
+        </a>
+    </li>
+    <li class="@yield('back_dues_select')">
+        <a href="{{ route('admin.back.due') }}">
+            <div class="parent-icon"><i class='bx bx-rupee'></i>
+            </div>
+            <div class="menu-title">Back Dues</div>
         </a>
     </li>
     <hr>
     <li class="@yield('payment_setting')">
         <a href="{{ route('payment.setting.view') }}">
-            <div class="parent-icon"><i class='bx bx-plus-circle'></i>
+            <div class="parent-icon"><i class='bx bxs-cog'></i>
             </div>
             <div class="menu-title">Payment Setting</div>
         </a>

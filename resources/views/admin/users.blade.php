@@ -56,12 +56,11 @@
                                                 }
                                                 $dues_amount = 0;
 
-                                                foreach (dues_amount($user->id) as $item) {
-                                                    foreach ($item->paytm_payments as $p) {
-                                                        $dues_amount += $p->fee;
-                                                    }
+                                                foreach (dues_amount($user->id) as $dues) {
+                                                    // foreach ($item->paytm_payments as $p) {
+                                                        $dues_amount += $dues->fee;
+                                                    // }
                                                 }
-
                                                 $dues =  $total_course_fee - $dues_amount;
                                             @endphp
                                             @if ($dues !== 0)
@@ -72,7 +71,11 @@
 
                                         </td>
                                         <td>
-                                            <button class="btn"><i class="bx bx-trash"></i></button>
+                                            <form action="{{ route('delete.student') }}" method="post">
+                                                @csrf
+                                                <input type="hidden" name="user_id" value="{{ $user->id }}">
+                                                <button type="submit" class="btn"><i class="bx bx-trash"></i></button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
